@@ -1,5 +1,6 @@
 defmodule Carto do
   import Carto.{Sku, Catalog}
+  alias Carto.Parse, as: Parse
 
   @headers ["User-Agent": "Amber/0.11 (Macintosh; Intel Mac OS X 15.1)", "Accept": "Application/json; Charset=utf-8"]
 
@@ -15,7 +16,7 @@ defmodule Carto do
       {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
         body
           |> Floki.parse()
-          |> parse_price(source)
+          |> Parse.price(source)
           |> Floki.text()
           |> String.to_float()
       {:ok, _} -> 
@@ -24,28 +25,6 @@ defmodule Carto do
         IO.puts("General Error")
     end
   end
-
-  def parse_price(page, :walmart) do
-    page
-    |> Floki.find(".price-characteristic")
-    |> Enum.at(0)
-    |> Floki.attribute("content")
-  end
-
-  def parse_price(page, :classyhome) do
-    page
-    |> Floki.find("#finalPrice")
-    |> Floki.text()
-  end
-
-  def parse_price(page, :amazon) do
-    page
-    |> Floki.find("#priceblock_ourprice")
-    |> Floki.text()
-    |> String.replace("$","")
-  end
-
-  def parse_price(page, source), do: IO.inspect("#{source} Not Implemented")
 
   def get_source_url(sku, source), do: Access.get(sku.sources, source)
 

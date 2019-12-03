@@ -9,8 +9,8 @@ defmodule Carto.Sku do
     %__MODULE__{msku: msku, name: name, map_price: map_price, sources: sources, scans: scans}
   end
 
-  def add_source(sku, _new_source) do
-    sku
+  def add_source(sku, new_source) do
+    Map.update(sku, :sources, sku.sources, fn c -> c ++ [new_source] end)
   end
 
   def add_scan(sku, new_scan) do
