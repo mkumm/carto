@@ -9,7 +9,7 @@ defmodule Carto.Sku do
     %__MODULE__{msku: msku, name: name, map_price: map_price, sources: sources, scans: scans}
   end
 
-  def add_source(sku, new_source) do
+  def add_source(sku, _new_source) do
     sku
   end
 
@@ -30,7 +30,23 @@ defmodule Carto.Sku do
     Map.replace!(sku, :msku, new_msku)
   end
 
-  def sample_data() do
+  def sample_data(:chair) do
+    %__MODULE__{
+      msku: "53347",
+      name: "ACME Brancaster Chair, Retro Brown Top Grain Leather & Aluminum",
+      map_price: 935.00,
+      sources: [
+        {:amazon, "https://www.amazon.com/Brancaster-Retro-Brown-Leather-Aluminum/dp/B073VQF96R/ref=sr_1_1?crid=RQSEIEIXJVRX&keywords=acme+furniture&qid=1575309574&sprefix=Acme+fur%2Caps%2C143&sr=8-1"},
+        {:walmart, "https://www.walmart.com/ip/ACME-Brancaster-Chair-Retro-Brown-Top-Grain-Leather-Aluminum/193351271"}
+      ],
+      scans: [
+        {:walmart, ~D[2020-11-25], 699.69},
+        {:amazon, ~D[2019-12-01], 935.00}
+      ]
+    }
+  end
+
+  def sample_data(_) do
     %__MODULE__{
       msku: "00114",
       map_price: 250.00,
