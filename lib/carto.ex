@@ -38,8 +38,17 @@ defmodule Carto do
     |> Floki.text()
   end
 
+  def parse_price(page, :amazon) do
+    page
+    |> Floki.find("#priceblock_ourprice")
+    |> Floki.text()
+    |> String.replace("$","")
+  end
+
   def parse_price(page, source), do: IO.inspect("#{source} Not Implemented")
 
   def get_source_url(sku, source), do: Access.get(sku.sources, source)
+
+  def headers(), do: @headers
 
 end
