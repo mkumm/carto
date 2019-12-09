@@ -1,5 +1,6 @@
 defmodule Carto.Scrape do
   alias Carto.Parse, as: Parse
+  require Logger
   @headers [
     "User-Agent": "Amber/0.11 (Macintosh; Intel Mac OS X 15.1)",
     Accept: "Application/json; Charset=utf-8"
@@ -10,17 +11,21 @@ defmodule Carto.Scrape do
   def poison(source_url, source) do
     case HTTPoison.get(source_url, @headers) do
       {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
-        body
-        |> Floki.parse()
-        |> Parse.price(source)
-        |> Floki.text()
-        |> string_to_float()
-
+        try do
+          body
+          |> Floki.parse()
+          |> Parse.price(source)
+          |> Floki.text()
+          |> string_to_float()
+        rescue
+          _ -> 0.00
+        end
       {:ok, _} ->
-        IO.puts("Not Found")
-
+        Logger.info("Product Not Found")
+        nil
       {:error, _} ->
-        IO.puts("General Error")
+        Logger.info("General Error")
+        nil
     end
   end
 

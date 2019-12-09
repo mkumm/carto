@@ -16,8 +16,13 @@ defmodule Carto.Sku do
     sku
     |> get_sources
     |> Enum.map(fn {source, _url} -> {source, get_current_price(sku, source)} end)
-    |> Enum.map(fn {source, price} -> {source, Date.utc_today, price} end)
+    |> Enum.map(fn {source, price} -> create_scan_record(source, price, sku.map_price) end)
+    |> Enum.filter(& !is_nil(&1))
   end
+
+  def create_scan_record(_source, 0.00, _map), do: nil
+
+  def create_scan_record(source, price, map), do: {source, Date.utc_today, price, map}
 
   def get_sources(sku), do: Map.fetch!(sku, :sources)
 
@@ -72,8 +77,8 @@ defmodule Carto.Sku do
          "https://www.walmart.com/ip/ACME-Brancaster-Chair-Retro-Brown-Top-Grain-Leather-Aluminum/193351271"}
       ],
       scans: [
-        {:walmart, ~D[2020-11-25], 699.69},
-        {:amazon, ~D[2019-12-01], 935.00}
+        {:walmart, ~D[2020-11-25], 699.69, 935.00},
+        {:amazon, ~D[2019-12-01], 935.00, 935.00}
       ]
     }
   end
@@ -93,10 +98,10 @@ defmodule Carto.Sku do
          "https://jet.com/product/Acme-Furniture-Willcox-Cherry-Corner-Computer-Desk/8462d9b63f0644fe83c829939a365534"}
       ],
       scans: [
-        {:jet, ~D[2019-09-01], 227.15},
-        {:classyhome, ~D[2019-11-25], 178.16},
-        {:furniturecart, ~D[2019-11-25], 279.25},
-        {:walmart, ~D[2020-11-25], 120.69}
+        {:jet, ~D[2019-09-01], 227.15, 250.00},
+        {:classyhome, ~D[2019-11-25], 178.16, 250.00},
+        {:furniturecart, ~D[2019-11-25], 279.25, 250.00},
+        {:walmart, ~D[2020-11-25], 120.69, 250.00}
       ]
     }
   end
