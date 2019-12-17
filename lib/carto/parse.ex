@@ -29,5 +29,23 @@ defmodule Carto.Parse do
     |> String.replace("$", "")
   end
 
+  def price(html, :allmodern) do
+    html
+    |> Floki.find(".StandardPriceBlock > .BasePriceBlock > .notranslate")
+    |> Floki.text()
+    |> String.trim()
+    |> String.replace("$", "")
+  end
+
+
+  def price(html, :cymax) do
+    html
+    |> Floki.find("#product-main-price")
+    |> Floki.text()
+    |> String.trim()
+    |> String.replace("$","")
+    |> String.replace(",","")
+  end
+
   def parce_price(_html, source), do: IO.inspect("#{source} Not implemented")
 end

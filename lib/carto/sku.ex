@@ -69,12 +69,20 @@ defmodule Carto.Sku do
     %__MODULE__{
       msku: "53347",
       name: "ACME Brancaster Chair, Retro Brown Top Grain Leather & Aluminum",
-      map_price: 935.00,
+      map_price: 735.00,
       sources: [
         {:amazon,
          "https://www.amazon.com/Brancaster-Retro-Brown-Leather-Aluminum/dp/B073VQF96R/ref=sr_1_1?crid=RQSEIEIXJVRX&keywords=acme+furniture&qid=1575309574&sprefix=Acme+fur%2Caps%2C143&sr=8-1"},
         {:walmart,
-         "https://www.walmart.com/ip/ACME-Brancaster-Chair-Retro-Brown-Top-Grain-Leather-Aluminum/193351271"}
+          "https://www.walmart.com/ip/ACME-Brancaster-Chair-Retro-Brown-Top-Grain-Leather-Aluminum/193351271"},
+        {:hayneedle,
+          "https://www.hayneedle.com/product/acmefurniturebrancaster31inaccentchair.cfm"},
+        {:allmodern, 
+          "https://www.allmodern.com/Modern-Rustic-Interiors--Virgil-Barrel-Chair-STSS5817-L54-K~A000729188.html"},
+        {:homary,
+          "https://www.homary.com/zado-industrial-loft-upholstered-aviator-chair-brown-leather-barrel-chair.html"},
+        {:cymax,
+          "https://www.cymax.com/acme-brancaster-chair-in-retro-brown-top-grain-leather-and-aluminum-53547.htm"}
       ],
       scans: [
         {:walmart, ~D[2020-11-25], 699.69, 935.00},
