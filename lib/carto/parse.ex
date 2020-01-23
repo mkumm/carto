@@ -12,6 +12,7 @@ defmodule Carto.Parse do
     |> Floki.text()
     |> String.trim()
     |> String.replace("$", "")
+    |> String.replace(",","")
   end
 
   def price(html, :classyhome) do
@@ -27,6 +28,7 @@ defmodule Carto.Parse do
     |> Floki.text()
     |> String.trim()
     |> String.replace("$", "")
+    |> String.replace(",","")
   end
 
   def price(html, :allmodern) do
@@ -35,6 +37,7 @@ defmodule Carto.Parse do
     |> Floki.text()
     |> String.trim()
     |> String.replace("$", "")
+    |> String.replace(",","")
   end
 
 
